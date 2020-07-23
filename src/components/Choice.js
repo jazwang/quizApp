@@ -5,26 +5,33 @@ class Choice extends React.Component {
         super(props);
         this.state = { 
             isAnswered: false,
-            texts: ['','']
+            texts: ['CN','USA']
         };
         this.checkAnswer = this.checkAnswer.bind(this);
     }
 
     checkAnswer(e) {
-        let isAnswered = this.state.isAnswered;
+        let { isAnswered } = this.props;
 
         if (!isAnswered) {
             let elem = e.currentTarget;
-            let { correct, increaseScore } = this.props;
+            let { currentAnswer, increaseScore } = this.props;
+            let answer = Number(elem.dataset.id);
             
+            if (answer === currentAnswer){
+                increaseScore();
+            }
+
+            this.props.showButton();
         }
     }
     render() {
         return (
-            <div>
-                <button>
-                    C. HAHAHAHA
-                </button>
+            <div id="answers">
+                <ul>
+                    <li onClick={this.checkAnswer} data-id="0"><span>CN</span></li>
+                    <li onClick={this.checkAnswer} data-id="1"><span>USA</span></li>
+                </ul>
             </div>
             
         )
